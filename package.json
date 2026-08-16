@@ -1,17 +1,17 @@
 {
-  "name": "wacrm",
-  "version": "0.8.0",
+  "name": "klasify",
+  "version": "1.0.0",
   "private": true,
-  "description": "Self-hostable CRM template for WhatsApp built on Next.js and Supabase — shared inbox, contacts, sales pipelines, broadcasts, and no-code automations.",
+  "description": "AI WhatsApp Receptionist for Coaching Centers — lead capture, auto-reply, sales pipeline, and follow-up automation.",
   "license": "MIT",
-  "author": "Arnas Donauskas",
-  "homepage": "https://github.com/ArnasDon/wacrm",
+  "author": "Iliash",
+  "homepage": "https://github.com/Swin441/klasify",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ArnasDon/wacrm.git"
+    "url": "git+https://github.com/Swin441/klasify.git"
   },
   "bugs": {
-    "url": "https://github.com/ArnasDon/wacrm/issues"
+    "url": "https://github.com/Swin441/klasify/issues"
   },
   "keywords": [
     "crm",
