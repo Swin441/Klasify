@@ -174,15 +174,13 @@ export default function PipelinesPage() {
   // state; the load completion uses async setters inside promise
   // callbacks (not synchronous in the effect body).
   useEffect(() => {
-    if (!selectedPipelineId) {
-      // eslint-disable-next-line react-hooks/set-state-in-effect
-      setStages([]);
-      // eslint-disable-next-line react-hooks/set-state-in-effect
-      setDeals([]);
-      return;
-    }
     let cancelled = false;
     (async () => {
+      if (!selectedPipelineId) {
+        setStages([]);
+        setDeals([]);
+        return;
+      }
       const [s, d] = await Promise.all([
         loadStages(selectedPipelineId),
         loadDeals(selectedPipelineId),
