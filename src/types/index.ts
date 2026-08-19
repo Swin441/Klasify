@@ -713,3 +713,75 @@ export interface QuickReply {
   created_at: string;
   updated_at: string;
 }
+
+// ============================================================
+// Coaching catalog (migration 041)
+//
+// Phase 2A — exams, courses, batches. Account-scoped catalog
+// entities that classify and package admission opportunities.
+// ============================================================
+
+export type CourseMode = 'offline' | 'online' | 'hybrid';
+
+export type CourseStatus = 'active' | 'inactive';
+
+export type BatchStatus = 'active' | 'inactive' | 'full';
+
+export interface Exam {
+  id: string;
+  /** Tenancy key — every exam belongs to one account. */
+  account_id: string;
+  /** e.g. "APSC", "SSC CGL", "IBPS PO". Unique per account. */
+  name: string;
+  /** Optional grouping, e.g. "State PSC", "SSC", "Banking". */
+  category?: string | null;
+  /** Soft-disable flag; inactive exams can be hidden in pickers. */
+  is_active: boolean;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface Course {
+  id: string;
+  /** Tenancy key — every course belongs to one account. */
+  account_id: string;
+  /** Optional parent exam. Database guarantees same-account ownership. */
+  exam_id?: string | null;
+  /** e.g. "APSC Foundation 2026". Unique per account. */
+  name: string;
+  description?: string | null;
+  /** Course length in weeks. */
+  duration_weeks?: number | null;
+  /** Programme fee. Defaults to 0; batches may override. */
+  fee: number;
+  mode: CourseMode;
+  status: CourseStatus;
+  created_at: string;
+  updated_at: string;
+  /** Hydrated by queries that embed `exams(*)`. Absent otherwise. */
+  exam?: Exam | null;
+}
+
+export interface Batch {
+  id: string;
+  /** Tenancy key — every batch belongs to one account. */
+  account_id: string;
+  /** Parent course. Database guarantees same-account ownership. */
+  course_id: string;
+  /** e.g. "Morning Batch A". Unique per account + course. */
+  name: string;
+  start_date?: string | null;
+  end_date?: string | null;
+  /** e.g. "6:00 AM – 8:00 AM". */
+  class_timing?: string | null;
+  mode: CourseMode;
+  /** Optional seat limit. */
+  capacity?: number | null;
+  /** Optional — overrides course.fee when set. */
+  fee?: number | null;
+  status: BatchStatus;
+  created_at: string;
+  updated_at: string;
+  /** Hydrated by queries that embed `courses(*)`. Absent otherwise. */
+  course?: Course | null;
+}
