@@ -6,6 +6,7 @@ import { useAuth } from "@/hooks/use-auth";
 import { cn } from "@/lib/utils";
 import type { Contact, Deal, ContactNote, Tag } from "@/types";
 import {
+  CalendarClock,
   Phone,
   Mail,
   Copy,
@@ -17,6 +18,7 @@ import {
   Plus,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import Link from "next/link";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { format } from "date-fns";
 import { useTranslations } from "next-intl";
@@ -179,6 +181,22 @@ export function ContactSidebar({ contact }: ContactSidebarProps) {
           </div>
 
           {/* Divider */}
+          <div className="my-4 border-t border-border" />
+
+          <Button
+            variant="outline"
+            size="sm"
+            className="w-full border-primary/30 text-primary hover:bg-primary/10"
+            render={
+              <Link
+                href={`/follow-ups/new?contact_id=${contact.id}${deals[0] ? `&deal_id=${deals[0].id}` : ''}`}
+              />
+            }
+          >
+            <CalendarClock className="mr-2 h-4 w-4" />
+            Schedule follow-up
+          </Button>
+
           <div className="my-4 border-t border-border" />
 
           {/* Tags */}

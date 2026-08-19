@@ -42,6 +42,10 @@ BEGIN
     RAISE EXCEPTION 'public.accounts is missing — migration 017 did not apply';
   END IF;
 
+  IF to_regclass('public.follow_ups') IS NULL THEN
+    RAISE EXCEPTION 'public.follow_ups is missing — migration 040 did not apply';
+  END IF;
+
   RAISE NOTICE 'schema verification passed';
 END
 $$;

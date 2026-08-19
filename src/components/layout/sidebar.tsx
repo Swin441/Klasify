@@ -11,6 +11,7 @@ import {
   Bell,
   Bot,
   Crown,
+  CalendarClock,
   GitBranch,
   LayoutDashboard,
   LogOut,
@@ -92,6 +93,7 @@ interface NavItem {
 const navItems: NavItem[] = [
   { href: "/dashboard", labelKey: "dashboard", icon: LayoutDashboard },
   { href: "/inbox", labelKey: "inbox", icon: MessageSquare },
+  { href: "/follow-ups", labelKey: "followUps", icon: CalendarClock },
   { href: "/notifications", labelKey: "notifications", icon: Bell },
   { href: "/contacts", labelKey: "contacts", icon: Users },
   { href: "/pipelines", labelKey: "pipelines", icon: GitBranch },

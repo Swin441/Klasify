@@ -25,6 +25,7 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import {
   Check,
+  CalendarClock,
   X,
   Trash2,
   MessageSquare,
@@ -429,6 +430,18 @@ export function DealForm({
           </div>
 
           <div className="border-t border-border/50 bg-popover/80 p-4">
+            {deal && (
+              <Button
+                type="button"
+                variant="outline"
+                size="sm"
+                className="mb-3 w-full border-primary/30 text-primary hover:bg-primary/10"
+                render={<Link href={`/follow-ups/new?deal_id=${deal.id}`} />}
+              >
+                <CalendarClock className="mr-2 h-4 w-4" />
+                Schedule follow-up
+              </Button>
+            )}
             <div className="flex gap-2">
               <Button
                 variant="outline"

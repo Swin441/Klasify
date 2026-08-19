@@ -391,6 +391,39 @@ export interface Deal {
   assignee?: Profile;
 }
 
+export type FollowUpType =
+  | 'call'
+  | 'whatsapp'
+  | 'counselling'
+  | 'fee_follow_up'
+  | 'admission_follow_up'
+  | 'other';
+
+export type FollowUpStatus = 'pending' | 'completed' | 'cancelled';
+
+export interface FollowUp {
+  id: string;
+  account_id: string;
+  contact_id: string;
+  deal_id?: string | null;
+  assigned_to?: string | null;
+  type: FollowUpType;
+  title: string;
+  notes?: string | null;
+  scheduled_at: string;
+  status: FollowUpStatus;
+  completed_at?: string | null;
+  completed_by?: string | null;
+  outcome?: string | null;
+  created_by: string;
+  created_at: string;
+  updated_at: string;
+  contact?: Pick<Contact, 'id' | 'name' | 'phone'>;
+  deal?: Pick<Deal, 'id' | 'title' | 'pipeline_id' | 'stage_id'> & {
+    stage?: { name: string } | null;
+  };
+}
+
 export type BroadcastStatus = 'draft' | 'scheduled' | 'sending' | 'sent' | 'failed';
 export type RecipientStatus = 'pending' | 'sent' | 'delivered' | 'read' | 'replied' | 'failed';
 
