@@ -366,6 +366,18 @@ export interface PipelineStage {
 
 export type DealStatus = 'open' | 'won' | 'lost';
 
+export type LeadSource =
+  | 'whatsapp'
+  | 'walk_in'
+  | 'phone'
+  | 'referral'
+  | 'website'
+  | 'facebook'
+  | 'instagram'
+  | 'other';
+
+export type PreparationLevel = 'beginner' | 'intermediate' | 'advanced';
+
 export interface Deal {
   id: string;
   user_id: string;
@@ -384,11 +396,83 @@ export interface Deal {
   notes?: string;
   expected_close_date?: string;
   status?: DealStatus;
+  /**
+   * Coaching qualification fields (migration 042). All nullable so
+   * existing deals keep working. Composite FKs guarantee same-account
+   * references at the database level.
+   */
+  exam_id?: string | null;
+  course_id?: string | null;
+  batch_id?: string | null;
+  lead_source?: LeadSource | null;
+  education?: string | null;
+  graduation_year?: number | null;
+  location?: string | null;
+  preparation_level?: PreparationLevel | null;
+  budget?: number | null;
+  preferred_mode?: CourseMode | null;
+  parent_involvement?: boolean;
   created_at: string;
   updated_at?: string;
   contact?: Contact;
   stage?: PipelineStage;
   assignee?: Profile;
+  exam?: Exam | null;
+  course?: Course | null;
+  batch?: Batch | null;
+}
+
+export type PaymentStatus = 'pending' | 'partial' | 'paid';
+export type AdmissionStatus = 'admitted' | 'cancelled';
+
+export interface Admission {
+  id: string;
+  /** Tenancy key — every admission belongs to one account. */
+  account_id: string;
+  /** The converted deal. One admission per deal per account. */
+  deal_id: string;
+  /** The person. */
+  contact_id: string;
+  /** The programme admitted to. */
+  course_id: string;
+  /** Optional batch within the course. */
+  batch_id?: string | null;
+  admission_date: string;
+  total_fee: number;
+  amount_paid: number;
+  payment_status: PaymentStatus;
+  payment_date?: string | null;
+  payment_reference?: string | null;
+  status: AdmissionStatus;
+  /** Counsellor who handled the admission. */
+  counsellor_id?: string | null;
+  notes?: string | null;
+  created_by: string;
+  created_at: string;
+  updated_at: string;
+  /** Hydrated by queries that embed `deals(*)`. Absent otherwise. */
+  deal?: Deal | null;
+  contact?: Contact | null;
+  course?: Course | null;
+  batch?: Batch | null;
+}
+
+export interface StudentProfile {
+  id: string;
+  /** Tenancy key — every student profile belongs to one account. */
+  account_id: string;
+  /** The admission this profile belongs to. One per admission. */
+  admission_id: string;
+  /** The person. */
+  contact_id: string;
+  guardian_name?: string | null;
+  guardian_phone?: string | null;
+  education?: string | null;
+  graduation_year?: number | null;
+  created_at: string;
+  updated_at: string;
+  admission?: Admission | null;
+  contact?: Contact | null;
 }
 
 export type FollowUpType =
